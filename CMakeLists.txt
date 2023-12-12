@@ -1,5 +1,8 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.1 FATAL_ERROR)
 
+# Allow specifying -D<PackageName>_ROOT
+CMAKE_POLICY(SET CMP0074 NEW)
+
 INCLUDE(GNUInstallDirs)
 
 # ---[ Project
@@ -105,36 +108,36 @@ IF(FP16_BUILD_TESTS)
   # ---[ Build FP16 unit tests
   ADD_EXECUTABLE(ieee-to-fp32-bits-test test/ieee-to-fp32-bits.cc test/tables.cc)
   TARGET_INCLUDE_DIRECTORIES(ieee-to-fp32-bits-test PRIVATE test)
-  TARGET_LINK_LIBRARIES(ieee-to-fp32-bits-test fp16 gtest gtest_main)
+  TARGET_LINK_LIBRARIES(ieee-to-fp32-bits-test fp16 GTest::gtest GTest::gtest_main)
   ADD_TEST(ieee-to-fp32-bits ieee-to-fp32-bits-test)
 
   ADD_EXECUTABLE(ieee-to-fp32-value-test test/ieee-to-fp32-value.cc test/tables.cc)
   TARGET_INCLUDE_DIRECTORIES(ieee-to-fp32-value-test PRIVATE test)
-  TARGET_LINK_LIBRARIES(ieee-to-fp32-value-test fp16 gtest gtest_main)
+  TARGET_LINK_LIBRARIES(ieee-to-fp32-value-test fp16 GTest::gtest GTest::gtest_main)
   ADD_TEST(ieee-to-fp32-value ieee-to-fp32-value-test)
 
   ADD_EXECUTABLE(ieee-from-fp32-value-test test/ieee-from-fp32-value.cc test/tables.cc)
   TARGET_INCLUDE_DIRECTORIES(ieee-from-fp32-value-test PRIVATE test)
-  TARGET_LINK_LIBRARIES(ieee-from-fp32-value-test fp16 gtest gtest_main)
+  TARGET_LINK_LIBRARIES(ieee-from-fp32-value-test fp16 GTest::gtest GTest::gtest_main)
   ADD_TEST(ieee-from-fp32-value ieee-from-fp32-value-test)
 
   ADD_EXECUTABLE(alt-to-fp32-bits-test test/alt-to-fp32-bits.cc test/tables.cc)
   TARGET_INCLUDE_DIRECTORIES(alt-to-fp32-bits-test PRIVATE test)
-  TARGET_LINK_LIBRARIES(alt-to-fp32-bits-test fp16 gtest gtest_main)
+  TARGET_LINK_LIBRARIES(alt-to-fp32-bits-test fp16 GTest::gtest GTest::gtest_main)
   ADD_TEST(alt-to-fp32-bits alt-to-fp32-bits-test)
 
   ADD_EXECUTABLE(alt-to-fp32-value-test test/alt-to-fp32-value.cc test/tables.cc)
   TARGET_INCLUDE_DIRECTORIES(alt-to-fp32-value-test PRIVATE test)
-  TARGET_LINK_LIBRARIES(alt-to-fp32-value-test fp16 gtest gtest_main)
+  TARGET_LINK_LIBRARIES(alt-to-fp32-value-test fp16 GTest::gtest GTest::gtest_main)
   ADD_TEST(alt-to-fp32-value alt-to-fp32-value-test)
 
   ADD_EXECUTABLE(alt-from-fp32-value-test test/alt-from-fp32-value.cc test/tables.cc)
   TARGET_INCLUDE_DIRECTORIES(alt-from-fp32-value-test PRIVATE test)
-  TARGET_LINK_LIBRARIES(alt-from-fp32-value-test fp16 gtest gtest_main)
+  TARGET_LINK_LIBRARIES(alt-from-fp32-value-test fp16 GTest::gtest GTest::gtest_main)
   ADD_TEST(alt-from-fp32-value alt-from-fp32-value-test)
 
   ADD_EXECUTABLE(bitcasts-test test/bitcasts.cc)
-  TARGET_LINK_LIBRARIES(bitcasts-test fp16 gtest gtest_main)
+  TARGET_LINK_LIBRARIES(bitcasts-test fp16 GTest::gtest GTest::gtest_main)
   ADD_TEST(bitcasts bitcasts-test)
 ENDIF()
 
@@ -151,28 +154,28 @@ IF(FP16_BUILD_BENCHMARKS)
   ADD_EXECUTABLE(ieee-element-bench bench/ieee-element.cc)
   TARGET_COMPILE_DEFINITIONS(ieee-element-bench PRIVATE FP16_COMPARATIVE_BENCHMARKS=1)
   TARGET_INCLUDE_DIRECTORIES(ieee-element-bench PRIVATE ${PROJECT_SOURCE_DIR})
-  TARGET_LINK_LIBRARIES(ieee-element-bench fp16 psimd benchmark)
+  TARGET_LINK_LIBRARIES(ieee-element-bench fp16 psimd benchmark::benchmark)
 
   ADD_EXECUTABLE(alt-element-bench bench/alt-element.cc)
-  TARGET_LINK_LIBRARIES(alt-element-bench fp16 psimd benchmark)
+  TARGET_LINK_LIBRARIES(alt-element-bench fp16 psimd benchmark::benchmark)
 
   ADD_EXECUTABLE(from-ieee-array-bench bench/from-ieee-array.cc)
   FP16_TARGET_ENABLE_CXX11(from-ieee-array-bench)
   TARGET_COMPILE_DEFINITIONS(from-ieee-array-bench PRIVATE FP16_COMPARATIVE_BENCHMARKS=1)
   TARGET_INCLUDE_DIRECTORIES(from-ieee-array-bench PRIVATE ${PROJECT_SOURCE_DIR})
-  TARGET_LINK_LIBRARIES(from-ieee-array-bench fp16 psimd benchmark)
+  TARGET_LINK_LIBRARIES(from-ieee-array-bench fp16 psimd benchmark::benchmark)
 
   ADD_EXECUTABLE(from-alt-array-bench bench/from-alt-array.cc)
   FP16_TARGET_ENABLE_CXX11(from-alt-array-bench)
-  TARGET_LINK_LIBRARIES(from-alt-array-bench fp16 psimd benchmark)
+  TARGET_LINK_LIBRARIES(from-alt-array-bench fp16 psimd benchmark::benchmark)
 
   ADD_EXECUTABLE(to-ieee-array-bench bench/to-ieee-array.cc)
   FP16_TARGET_ENABLE_CXX11(to-ieee-array-bench)
   TARGET_COMPILE_DEFINITIONS(to-ieee-array-bench PRIVATE FP16_COMPARATIVE_BENCHMARKS=1)
   TARGET_INCLUDE_DIRECTORIES(to-ieee-array-bench PRIVATE ${PROJECT_SOURCE_DIR})
-  TARGET_LINK_LIBRARIES(to-ieee-array-bench fp16 psimd benchmark)
+  TARGET_LINK_LIBRARIES(to-ieee-array-bench fp16 psimd benchmark::benchmark)
 
   ADD_EXECUTABLE(to-alt-array-bench bench/to-alt-array.cc)
   FP16_TARGET_ENABLE_CXX11(to-alt-array-bench)
-  TARGET_LINK_LIBRARIES(to-alt-array-bench fp16 psimd benchmark)
+  TARGET_LINK_LIBRARIES(to-alt-array-bench fp16 psimd benchmark::benchmark)
 ENDIF()
